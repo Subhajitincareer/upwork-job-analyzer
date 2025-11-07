@@ -1,1 +1,16 @@
 
+# Environment
+.env
+venv/
+__pycache__/
+
+# Data
+data/raw/*.json
+data/processed/*.json
+logs/*.log
+
+# Reports
+data/reports/*.pdf
+
+# IDE
+.vscode/
