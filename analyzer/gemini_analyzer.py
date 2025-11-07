@@ -21,8 +21,11 @@ class GeminiAnalyzer:
         """Configure Gemini API"""
         try:
             genai.configure(api_key=self.config.GEMINI_API_KEY)
-            self.model = genai.GenerativeModel('gemini-pro')
-            logger.info("✅ Gemini API configured")
+            
+            # Use Gemini 2.5 Flash - Latest stable model
+            self.model = genai.GenerativeModel('models/gemini-2.5-flash')
+            
+            logger.info("✅ Gemini 2.5 Flash configured")
         except Exception as e:
             logger.error(f"Failed to configure Gemini: {e}")
             raise
@@ -46,7 +49,7 @@ class GeminiAnalyzer:
             prompt = self._create_prompt(jobs_summary, len(jobs), historical_data)
             
             # Generate analysis
-            logger.info("🧠 Generating analysis with Gemini...")
+            logger.info("🧠 Generating analysis with Gemini 2.5...")
             response = self.model.generate_content(prompt)
             
             analysis = response.text
@@ -96,25 +99,25 @@ JOBS DATA:
 
 Provide a comprehensive analysis in this EXACT format:
 
-## 📊 TOP DEMANDED SKILLS
+## TOP DEMANDED SKILLS
 List the top 10 most mentioned skills with their frequency count.
 Format: 1. Skill Name - X mentions
 
-## 🔥 COMMON PROJECT PATTERNS
+## COMMON PROJECT PATTERNS
 Identify 5 most common types of projects being requested.
 For each pattern, explain what clients typically want.
 
-## 📈 TRENDING TECHNOLOGIES
+## TRENDING TECHNOLOGIES
 List 5 new or increasingly popular technologies/frameworks.
 Explain why each is trending.
 
-## 💰 BUDGET INSIGHTS
+## BUDGET INSIGHTS
 - Average hourly rate range
 - Average fixed price range
 - Highest paying project categories
 - Budget distribution (low/mid/high)
 
-## 🎯 PROJECT RECOMMENDATION
+## PROJECT RECOMMENDATION
 Based on the patterns, recommend ONE specific portfolio project to build.
 Include:
 - Project name and description
@@ -122,10 +125,10 @@ Include:
 - Technologies to use
 - Why it's valuable for the market
 
-## 📝 KEY TAKEAWAYS
+## KEY TAKEAWAYS
 Provide 5 actionable insights for freelancers.
 
-## 📉 MARKET COMPARISON
+## MARKET COMPARISON
 {f"Compare with previous data trends." if historical_data else "First analysis - establish baseline."}
 
 Keep the analysis professional, data-driven, and actionable.

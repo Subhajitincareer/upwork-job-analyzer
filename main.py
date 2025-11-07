@@ -223,12 +223,12 @@ class UpworkJobAnalyzer:
         print("🔐 TESTING CREDENTIALS")
         print("=" * 60 + "\n")
         
-        # Test Gemini
+        # Test Gemini - FIXED MODEL NAME
         print("1️⃣ Testing Gemini API...")
         try:
             import google.generativeai as genai
             genai.configure(api_key=self.config.GEMINI_API_KEY)
-            model = genai.GenerativeModel('gemini-pro')
+            model = genai.GenerativeModel('models/gemini-2.5-flash')  # ← FIXED
             response = model.generate_content("Say hello in one word")
             print(f"✅ Gemini API working! Response: {response.text}")
         except Exception as e:
